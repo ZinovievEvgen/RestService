@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <preConditions>
+        <dbms type="postgresql"/>
+    </preConditions>
+
+    <changeSet id="0" author="saidHazzard">
+        <tagDatabase tag="db_init"/>
+    </changeSet>
+
+    <include file="healty_v.1.0/db.changelog-v.1.0.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="1" author="saidHazzard">
+        <tagDatabase tag="healty_v.1.0"/>
+    </changeSet>
+
+    <include file="healty_v.2.0/db.changelog-v.2.0.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="2" author="saidHazzard">
+        <tagDatabase tag="healty_v.2.0"/>
+    </changeSet>
+
+    <include file="healty_v.2.1/db.changelog-v.2.1.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="3" author="saidHazzard">
+        <tagDatabase tag="healty_v.2.1"/>
+    </changeSet>
+
+    <include file="healty_v.2.2/db.changelog-v.2.2.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="4" author="saidHazzard">
+        <tagDatabase tag="healty_v.2.2"/>
+    </changeSet>
+
+    <include file="healty_v.2.3/db.changelog-v.2.3.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="5" author="saidHazzard">
+        <tagDatabase tag="healty_v.2.3"/>
+    </changeSet>
+
+    <include file="healty_v.2.4/db.changelog-v.2.4.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="6" author="saidHazzard">
+        <tagDatabase tag="healty_v.2.4"/>
+    </changeSet>
+
+    <include file="healty_v.2.5/db.changelog-v.2.5.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="7" author="saidHazzard">
+        <tagDatabase tag="healty_v.2.5"/>
+    </changeSet>
+
+</databaseChangeLog>

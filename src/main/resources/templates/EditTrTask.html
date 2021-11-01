@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit Translate task</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link th:href="@{/static/css/appStore/home.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <!-- шапка -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/panel-title">by SaidHAZZARD</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav nav-tabs mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="/manage/task-types">Типы Задач</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/tasks">Задачи</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/sections">Разделы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/service">Сервисы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/translate-task">Перевод задач</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/translate-section">Перевод разделов</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/translate-service">Перевод сервисов</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/person">Пользователи</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- контент -->
+    <div class="container-fluid" style="padding: 50px">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">Manage Panel</h1>
+                <ul class="nav nav-pills" role="tablist">
+                    <li><a href="#listTrTask" role="tab" data-toggle="pill">Translate task Table</a></li>
+                    <li><a href="#addTrTask" role="tab" data-toggle="pill">Add</a></li>
+                </ul>
+                <div class="table-responsive">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade" id="listTrTask">
+                            <h3>Translate Service Table</h3>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>DescriptionLang</th>
+                                    <th>RecommendationLang</th>
+                                    <th>ViewLinksLang</th>
+                                    <th>Language</th>
+                                    <th>Lang</th>
+                                    <th>TaskId</th>
+                                </tr>
+                                <tr th:each="translateTask : ${translateTaskList}">
+                                    <td th:text="${translateTask.id}"></td>
+                                    <td th:text="${translateTask.descriptionLang}"></td>
+                                    <td th:text="${translateTask.recommendationLang}"></td>
+                                    <td th:text="${translateTask.viewLinksLang}"></td>
+                                    <td th:text="${translateTask.language}"></td>
+                                    <td th:text="${translateTask.lang}"></td>
+                                    <td th:text="${translateTask.task.id}"></td>
+                                    <td>
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#EditTrTask">
+                                            Edit
+                                        </button>
+                                        <div id="EditTrTask" class="modal fade">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button class="close" data-dismiss="modal">х</button>
+                                                        <h4 class="modal-title">Edit service</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="form-add form-horizontal" role="form"
+                                                              th:action="@{/manage/update-translate-task}"
+                                                              method="post">
+                                                            <input type="hidden" name="id"
+                                                                   th:value="${translateTask.id}" default="NO DATA"/>
+                                                            <p><label class="form-control-add">Login:</label></p>
+                                                            <input class="form-control" placeholder="DescriptionLang"
+                                                                   required="required"
+                                                                   autofocus="autofocus" type="text"
+                                                                   name="descriptionLang"
+                                                                   size="20"
+                                                                   th:value="${translateTask.descriptionLang}"
+                                                                   default="NO DATA"/>
+                                                            <p><label
+                                                                    class="form-control-add">recommendationLang:</label>
+                                                            </p>
+                                                            <input class="form-control" placeholder="recommendationLang"
+                                                                   required="required"
+                                                                   type="text" name="recommendationLang" size="40"
+                                                                   th:value="${translateTask.recommendationLang}"
+                                                                   default="NO DATA"/>
+                                                            <p><label class="form-control-add">viewLinksLang:</label>
+                                                            </p>
+                                                            <input class="form-control" placeholder="viewLinksLang"
+                                                                   required="required"
+                                                                   type="text" name="viewLinksLang" size="20"
+                                                                   th:value="${translateTask.viewLinksLang}"
+                                                                   default="NO DATA"/>
+                                                            <p><label class="form-control-add">language:</label></p>
+                                                            <input class="form-control" placeholder="language"
+                                                                   required="required"
+                                                                   type="text" name="language" size="20"
+                                                                   th:value="${translateTask.language}"
+                                                                   default="NO DATA"/>
+                                                            <p><label class="form-control-add">lang:</label></p>
+                                                            <input class="form-control" placeholder="lang"
+                                                                   required="required"
+                                                                   type="text" name="lang" size="20"
+                                                                   th:value="${translateTask.lang}" default="NO DATA"/>
+                                                            <button class="btn btn-lg btn-primary btn-block"
+                                                                    type="submit">Edit
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-danger" data-dismiss="modal">Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><a th:href="@{'/manage/remove/translate-task/'+${translateTask.id}}">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </a></td>
+                                </tr>
+                            </table>
+                            <p>
+                                <a href="/admin" th:href="@{/manage}">
+                                    <button class="btn btn-lg btn-primary">Return</button>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="addTrTask">
+                        <div class="form-group">
+                            <h4 class="page-header">Add new TrService</h4>
+                            <form class="form-add form-horizontal" role="form" action="/manage/add-translate-task"
+                                  method="post">
+                                <input type="text" name="descriptionLang" class="form-control"
+                                       placeholder="descriptionLang"
+                                       required="required" autofocus="autofocus"/>
+                                <input type="text" name="recommendationLang" class="form-control"
+                                       placeholder="recommendationLang"
+                                       required="required"/>
+                                <input type="text" name="viewLinksLang" class="form-control" placeholder="viewLinksLang"
+                                       required="required"/>
+                                <input type="text" name="language" class="form-control" placeholder="language"
+                                       required="required"/>
+                                <input type="text" name="lang" class="form-control" placeholder="lang"
+                                       required="required"/>
+                                <label class="form-control-add">Task</label>
+                                <input type="text" name="idTask" class="form-control" placeholder="Task id"
+                                       required="required"/>
+                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:fragment="site-footer">
+    &copy;Blog System by SaiD_HazzarD, 2017
+</footer>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>
+    $('#EditTrTask a[href=#EditTrTask]').tab('show');
+    $('a[data-toggle="pill"]').on('hidden.bs.tab', function (e) {
+        console.log(e.target); // вкладка, которая стала активной
+        console.log(e.relatedTarget); // предыдущая активная вкладка
+    })
+</script>
+</body>
+</html>

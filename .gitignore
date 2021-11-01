@@ -1,0 +1,8 @@
+# environment
+.env
+
+#misc
+.idea
+
+#back
+target

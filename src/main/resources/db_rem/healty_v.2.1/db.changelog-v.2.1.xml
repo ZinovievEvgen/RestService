@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <include file="section/100-changeset-section-table.xml" relativeToChangelogFile="true"/>
+    <include file="services-and-items/110-changeset-services-and-items-table.xml" relativeToChangelogFile="true"/>
+    <include file="task/61-changeset-update-task-table.xml" relativeToChangelogFile="true"/>
+    <include file="translation-section/120-changeset-translation-section-table.xml" relativeToChangelogFile="true"/>
+    <include file="translation-service/130-changeset-translation-service-table.xml" relativeToChangelogFile="true"/>
+    <include file="new-translation-task/71-changeset-insert-translation-task.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

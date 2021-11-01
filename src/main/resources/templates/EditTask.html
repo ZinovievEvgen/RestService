@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit sections</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link th:href="@{/static/css/app/home.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <!-- шапка -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/panel-title">by SaidHAZZARD</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav nav-tabs mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="/manage/task-types">Типы Задач</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/tasks">Задачи</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/sections">Разделы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/service">Сервисы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/translate-task">Перевод задач</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/translate-section">Перевод разделов</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/translate-service">Перевод сервисов</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/manage/person">Пользователи</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- контент -->
+    <div class="container-fluid" style="padding: 50px">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">Manage Panel</h1>
+                <ul class="nav nav-pills" role="tablist">
+                    <li><a href="#listTask" role="tab" data-toggle="pill">Task Table</a></li>
+                    <li><a href="#addTask" role="tab" data-toggle="pill">Add</a></li>
+                </ul>
+                <div class="table-responsive">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade" id="listTask">
+                            <h3>Task Table</h3>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Recommendation</th>
+                                    <th>TimeToLive</th>
+                                    <th>QuantitySuccess</th>
+                                    <th>ViewLinks</th>
+                                    <th>MedLevel</th>
+                                    <th>HealLevel</th>
+                                    <th>TaskTypeId</th>
+                                </tr>
+                                <tr th:each="list : ${taskDtoList}">
+                                    <td th:text="${list.id}"></td>
+                                    <td th:text="${list.description}"></td>
+                                    <td th:text="${list.recommendation}"></td>
+                                    <td th:text="${list.timeToLive}"></td>
+                                    <td th:text="${list.quantitySuccess}"></td>
+                                    <td th:text="${list.viewLinks}"></td>
+                                    <td th:text="${list.medLevel}"></td>
+                                    <td th:text="${list.healLevel}"></td>
+                                    <td>
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#EditTask">
+                                            Edit
+                                        </button>
+                                        <div id="EditTask" class="modal fade">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button class="close" data-dismiss="modal">х</button>
+                                                        <h4 class="modal-title">Edit task</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="form-add form-horizontal" role="form"
+                                                              th:action="@{/manage/update-task}" method="post">
+                                                            <input type="hidden" name="id" size="20"
+                                                                   th:value="${list.id}" default="NO DATA"/>
+                                                            <p><label class="form-control-add">Description:</label></p>
+                                                            <input class="form-control" placeholder="Description"
+                                                                   required="required"
+                                                                   autofocus="autofocus" type="text" name="description"
+                                                                   th:value="${list.description}" default="NO DATA"/>
+                                                            <p><label class="form-control-add">Recommendation:</label></p>
+                                                            <input class="form-control" placeholder="Recommendation"
+                                                                   required="required"
+                                                                   autofocus="autofocus" type="text" name="recommendation"
+                                                                   th:value="${list.recommendation}" default="NO DATA"/>
+                                                            <p><label class="form-control-add">QuantitySuccess:</label></p>
+                                                            <input class="form-control" placeholder="QuantitySuccess"
+                                                                   required="required"
+                                                                   autofocus="autofocus" type="text" name="quantitySuccess"
+                                                                   th:value="${list.quantitySuccess}" default="NO DATA"/>
+                                                            <p><label class="form-control-add">ViewLinks:</label></p>
+                                                            <input class="form-control" placeholder="ViewLinks"
+                                                                   required="required"
+                                                                   autofocus="autofocus" type="text" name="viewLinks"
+                                                                   th:value="${list.viewLinks}" default="NO DATA"/>
+                                                            <p><label class="form-control-add">MedLevel:</label></p>
+                                                            <input class="form-control" placeholder="MedLevel"
+                                                                   required="required"
+                                                                   autofocus="autofocus" type="text" name="medLevel"
+                                                                   th:value="${list.medLevel}" default="NO DATA"/>
+                                                            <p><label class="form-control-add">HealLevel:</label></p>
+                                                            <input class="form-control" placeholder="HealLevel"
+                                                                   required="required"
+                                                                   autofocus="autofocus" type="text" name="healLevel"
+                                                                   th:value="${list.healLevel}" default="NO DATA"/>
+                                                            <button class="btn btn-lg btn-primary btn-block"
+                                                                    type="submit">Edit
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-danger" data-dismiss="modal">Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><a th:href="@{'/manage/remove/task/'+${list.id}}"><button class="btn btn-danger">Delete</button></a></td>
+                                </tr>
+                            </table>
+                            <p>
+                                <a href="/manage" th:href="@{/manage}"><button class="btn btn-lg btn-primary">Return</button></a>
+                            </p>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="addTask">
+                        <div class="form-group">
+                            <h4 class="page-header">Add new Task</h4>
+                            <form class="form-add form-horizontal" role="form" action="/manage/add-task" method="post">
+                                <input type="text" name="description" class="form-control" placeholder="Description"
+                                       required="required" autofocus="autofocus"/>
+                                <input type="text" name="recommendation" class="form-control" placeholder="Recommendation"
+                                       required="required" autofocus="autofocus"/>
+                                <input type="text" name="viewLinks" class="form-control" placeholder="ViewLinks"
+                                       required="required" autofocus="autofocus"/>
+                                <input type="text" name="medLevel" class="form-control" placeholder="MedLevel"
+                                       required="required" autofocus="autofocus"/>
+                                <input type="text" name="healLevel" class="form-control" placeholder="HealLevel"
+                                       required="required" autofocus="autofocus"/>
+                                <label class="form-control-add">Task Type</label>
+                                <input type="text" name="types" class="form-control" placeholder="Type Id"
+                                       required="required" autofocus="autofocus"/>
+                                <p><label class="form-control-add">1-Ежедневные</label></p>
+                                <p><label class="form-control-add">2-Еженедельные</label></p>
+                                <p><label class="form-control-add">3-Ежемесячные</label></p>
+                                <p><label class="form-control-add">4-Закрепленные</label></p>
+                                <p><label class="form-control-add">5-Ежегодные</label></p>
+                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:fragment="site-footer">
+    &copy;Blog System by SaiD_HazzarD, 2017
+</footer>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>
+    $('#EditTask a[href=#EditTask]').tab('show');
+    $('a[data-toggle="pill"]').on('hidden.bs.tab', function (e) {
+        console.log(e.target); // вкладка, которая стала активной
+        console.log(e.relatedTarget); // предыдущая активная вкладка
+    })
+</script>
+</body>
+</html>
